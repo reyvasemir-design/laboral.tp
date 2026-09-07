@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Más allá de la teoría - Pilar + 5[cite: 1]</title>
+    <style>
+        :root {
+            --primary-color: #1A365D; /* Azul académico */
+            --secondary-color: #2B6CB0;
+            --accent-color: #ED8936;
+            --bg-color: #F7FAFC;
+            --text-color: #2D3748;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Grid para los 4 Ejes */
+        .ejes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Tarjetas de Ejes con Animación al hacer Scroll */
+        .eje-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .eje-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .eje-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        /* Sección de Citas / Globos de Comentarios */
+        .citas-section {
+            margin-top: 5rem;
+            padding: 3rem 0;
+            background-color: #E2E8F0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .citas-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+        }
+
+        .citas-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        /* Animación Flotante para los Globos */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .globo {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            max-width: 300px;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Diferentes tiempos de animación para que no floten todos igual */
+        .globo:nth-child(2) { animation-delay: 1s; }
+        .globo:nth-child(3) { animation-delay: 2s; }
+        .globo:nth-child(4) { animation-delay: 3s; }
+
+        .globo::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30px;
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .globo p {
+            font-style: italic;
+            color: #4A5568;
+            margin-bottom: 1rem;
+        }
+
+        .globo span {
+            display: block;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            text-align: right;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Más allá de la teoría[cite: 1]</h1>
+        <p>Trabajo Práctico Evaluativo Nº 2 - Psicología Organizacional y Laboral[cite: 1]</p>
+    </header>
+
+    <div class="container">
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <p><strong>Equipo Pilar + 5:</strong> Aliaga, P. | Ibarra, F. | Lopez Crostelli, D.O. | Plomer, F. | Pereyra Nieto, E. | Vasquez Reyes, E. R.[cite: 1]</p>
+        </div>
+
+        <h2 style="text-align: center; margin-top: 4rem; color: var(--primary-color);">Ejes Transversales de Análisis[cite: 1]</h2>
+        
+        <div class="ejes-grid">
+            <!-- EJE 1 -->
+            <div class="eje-card fade-element">
+                <h3>I. Contexto y desarrollo[cite: 1]</h3>
+                <p>Análisis a partir de los paradigmas de Laloux (naranja, verde, ámbar)[cite: 1]. Se observa cómo las "experiencias de quiebre" (pandemia, rápida expansión) forzaron a los sistemas lejos de su equilibrio, impulsando la autoorganización y adaptabilidad[cite: 1].</p>
+            </div>
+
+            <!-- EJE 2 -->
+            <div class="eje-card fade-element">
+                <h3>II. Clima y dinámicas de interacción[cite: 1]</h3>
+                <p>El clima como variable co-producida en la matriz deliberativa[cite: 1]. Contraste entre canales horizontales (consultora)[cite: 1], tensiones interáreas (inmobiliaria)[cite: 1] y visiones jerárquicas tradicionales de establidad (gastronómico)[cite: 1].</p>
+            </div>
+
+            <!-- EJE 3 -->
+            <div class="eje-card fade-element">
+                <h3>III. Selección, formación e innovación[cite: 1]</h3>
+                <p>Basado en el modelo de la "mesa de cuatro patas" de Souto[cite: 1]. Las estrategias abarcan desde buscar mentalidad flexible[cite: 1], reclutamiento con fin social[cite: 1], hasta capacitaciones constantes para fortalecer el agregado de valor humano frente a la digitalización[cite: 1].</p>
+            </div>
+
+            <!-- EJE 4 -->
+            <div class="eje-card fade-element">
+                <h3>IV. La Salud mental[cite: 1]</h3>
+                <p>El trabajo es más que un espacio productivo[cite: 1]. Se plantea el rol del psicólogo desde una visión profiláctica para dinamizar las matrices vinculares y prevenir riesgos psicosociales (ej. propuesta del área "Mental Care")[cite: 1].</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE CITAS CON GLOBOS -->
+        <div class="citas-section">
+            <h2 class="citas-title">Voces del Campo Organizacional[cite: 1]</h2>
+            <div class="citas-container">
+                
+                <div class="globo">
+                    <p>"...nosotros somos una empresa en la cual el organigrama es bastante chato... no creemos por ejemplos en la retención de las personas, creemos en la fidelización de las mismas... si la persona esta bien, la empresa está bien"[cite: 1]</p>
+                    <span>- CEO, Consultora de RRHH[cite: 1]</span>
+                </div>
+
+                <div class="globo">
+                    <p>"...bastantes dura, señala mucho el error ajeno y pierde de vista que los errores de su equipo son propios..."[cite: 1]</p>
+                    <span>- Founder, Inmobiliaria[cite: 1]</span>
+                </div>
+
+                <div class="globo">
+                    <p>"...mantener un clima laboral estables [...] Si apuntan todos para el mismo lado, a todos les va a ir mejor..."[cite: 1]</p>
+                    <span>- Socio Directivo, Gastronómico[cite: 1]</span>
+                </div>
+
+                <div class="globo">
+                    <p>"...la dinámica del dia a dia, de hablar con tantas personas, de escuchar tantas emocionalidades... uno no sabe el abanico que se despierta en una entrevista de trabajo"[cite: 1]</p>
+                    <span>- CEO, Consultora (Sobre salud mental)[cite: 1]</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Universidad Católica de Córdoba | 4to Año - Lic. en Psicología</p>
+    </footer>
+
+    <!-- Script para detectar el scroll y activar animaciones -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const fadeElements = document.querySelectorAll('.fade-element');
+            fadeElements.forEach((el) => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
