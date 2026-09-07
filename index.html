@@ -1,321 +1,506 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Más allá de la teoría - Pilar + 5[cite: 1]</title>
-    <style>
-        /* Paleta de colores moderna y UX/UI orientada */
-        :root {
-            --bg-base: #0a0a0c;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
-            --accent-glow: rgba(139, 92, 246, 0.5);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Más allá de la teoría — TP2 Psicología Organizacional y Laboral</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+  :root {
+    --bg: #07090f;
+    --surface: rgba(16, 20, 32, 0.75);
+    --surface-hover: rgba(22, 28, 46, 0.9);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.18);
+    --border-active: rgba(99,172,255,0.5);
+    --text: #f0f4fc;
+    --muted: #6b7a99;
+    --accent: #4a9eff;
+    --accent-dim: rgba(74,158,255,0.12);
+    --accent-glow: rgba(74,158,255,0.25);
+    --pink: #e879a4;
+    --pink-dim: rgba(232,121,164,0.12);
+    --connector: rgba(99,172,255,0.2);
+    --radius: 14px;
+    --transition: 240ms cubic-bezier(0.4,0,0.2,1);
+  }
 
-        /* Cabecera con texto en gradiente */
-        header {
-            padding: 5rem 2rem;
-            text-align: center;
-            position: relative;
-        }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(20,50,120,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 30% at 80% 100%, rgba(80,20,120,0.15) 0%, transparent 60%);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem 4rem;
+  }
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-            opacity: 0.3;
-            z-index: -1;
-            filter: blur(50px);
-        }
+  /* ── HEADER ──────────────────────────────── */
+  .header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .header-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .header-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.03);
+  }
+  .header-hint svg { opacity: 0.5; flex-shrink: 0; }
 
-        header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
+  /* ── ÁRBOL ───────────────────────────────── */
+  .tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
 
-        header p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
+  .branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+  /* Conector vertical descendente desde el nodo */
+  .branch.has-children > .node-wrap > .node::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 28px;
+    background: var(--connector);
+    pointer-events: none;
+  }
 
-        .team-info {
-            text-align: center;
-            padding: 1rem;
-            border-radius: 50px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            display: inline-block;
-            margin: 0 auto 4rem auto;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
+  /* ── CHILDREN ROW ────────────────────────── */
+  .children-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    position: relative;
+    padding-top: 28px;
+    /* collapsed */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-12px) scaleY(0.95);
+    transform-origin: top center;
+    transition:
+      max-height 420ms cubic-bezier(0.4,0,0.2,1),
+      opacity 300ms ease,
+      transform 300ms ease;
+  }
+  .children-row.open {
+    max-height: 1600px;
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    overflow: visible;
+  }
 
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 3rem;
-            color: #fff;
-        }
+  /* Línea horizontal que une hijos */
+  .children-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% - 160px);
+    right: calc(50% - 160px);
+    height: 2px;
+    background: var(--connector);
+    pointer-events: none;
+  }
+  /* Si hay solo 1 hijo */
+  .children-row.single::before { display: none; }
 
-        /* Grid para los 4 Ejes */
-        .ejes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-        }
+  /* Conector vertical hacia cada hijo */
+  .branch-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .branch-wrap::before {
+    content: '';
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 28px;
+    background: var(--connector);
+    pointer-events: none;
+  }
 
-        /* Configuración base para el 3D */
-        .tilt-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            transform-style: preserve-3d; /* Permite el efecto 3D a los hijos */
-            transition: transform 0.1s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(12px);
-            position: relative;
-            cursor: pointer;
-        }
+  /* ── NODE ────────────────────────────────── */
+  .node-wrap { position: relative; }
 
-        .tilt-card:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
+  .node {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    width: 260px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition:
+      background var(--transition),
+      border-color var(--transition),
+      box-shadow var(--transition),
+      transform var(--transition);
+  }
 
-        /* Elementos internos que flotan en el eje Z */
-        .tilt-content {
-            transform: translateZ(40px); /* Empuja el texto hacia adelante en 3D */
-            pointer-events: none;
-        }
+  .node.clickable {
+    cursor: pointer;
+    border-bottom: 2px solid rgba(74,158,255,0.35);
+  }
+  .node.clickable.pink-accent {
+    border-bottom-color: rgba(232,121,164,0.4);
+  }
+  .node.clickable:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px var(--accent-dim);
+    transform: translateY(-2px);
+  }
+  .node.clickable.pink-accent:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px var(--pink-dim);
+  }
+  .node.clickable.is-open {
+    border-color: var(--border-active);
+    background: var(--surface-hover);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+  .node.clickable.pink-accent.is-open {
+    border-color: rgba(232,121,164,0.45);
+    box-shadow: 0 0 0 3px var(--pink-dim);
+  }
 
-        .tilt-card h3 {
-            margin-top: 0;
-            font-size: 1.4rem;
-            color: #fff;
-            margin-bottom: 1rem;
-        }
+  /* Root node — más grande */
+  .node.root {
+    width: 320px;
+    padding: 1.75rem 2rem;
+    text-align: center;
+  }
 
-        .tilt-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+  /* Leaf node — sin interacción */
+  .node.leaf {
+    width: 240px;
+    border-bottom: none;
+  }
 
-        /* Sección de Citas / Globos */
-        .citas-section {
-            margin-top: 7rem;
-            position: relative;
-        }
+  /* Quote node */
+  .node.quote-node {
+    width: 240px;
+    border-bottom: none;
+    text-align: left;
+    background: rgba(12,18,36,0.8);
+  }
 
-        .citas-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            perspective: 1000px;
-        }
+  /* ── CHEVRON ─────────────────────────────── */
+  .chevron {
+    position: absolute;
+    top: 1.1rem;
+    right: 1rem;
+    width: 18px;
+    height: 18px;
+    color: var(--muted);
+    transition: transform 280ms ease, color 200ms ease;
+    pointer-events: none;
+  }
+  .node.is-open .chevron { transform: rotate(180deg); color: var(--accent); }
+  .node.pink-accent.is-open .chevron { color: var(--pink); }
 
-        .globo {
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 2rem;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease;
-        }
+  /* ── TIPOGRAFÍA ──────────────────────────── */
+  .label-eyebrow {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .node-title {
+    font-size: 1rem;
+    font-weight: 650;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .node.root .node-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #74c0fc 0%, #a5d8ff 50%, #c5f6fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+  .node-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .node.root .node-sub { font-size: 0.82rem; }
 
-        .globo-content {
-            transform: translateZ(50px);
-        }
+  .quote-text {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: #c4cfe8;
+    line-height: 1.55;
+    margin-bottom: 0.6rem;
+  }
+  .quote-mark {
+    display: block;
+    font-size: 1.8rem;
+    line-height: 0.8;
+    color: var(--accent);
+    opacity: 0.4;
+    margin-bottom: 4px;
+    font-family: Georgia, serif;
+  }
+  .quote-author {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .quote-node.pink-cita .quote-mark,
+  .quote-node.pink-cita .quote-author { color: var(--pink); }
 
-        .globo p {
-            font-style: italic;
-            color: #e5e7eb;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
+  /* ── PULSE ON CLICKABLE ──────────────────── */
+  @keyframes ring {
+    0% { box-shadow: 0 0 0 0 rgba(74,158,255,0.35); }
+    70% { box-shadow: 0 0 0 8px rgba(74,158,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,158,255,0); }
+  }
+  .node.clickable:not(.is-open):not(:hover) { animation: ring 3s infinite; }
+  .node.clickable.pink-accent:not(.is-open):not(:hover) {
+    animation: ring-pink 3s infinite;
+  }
+  @keyframes ring-pink {
+    0% { box-shadow: 0 0 0 0 rgba(232,121,164,0.35); }
+    70% { box-shadow: 0 0 0 8px rgba(232,121,164,0); }
+    100% { box-shadow: 0 0 0 0 rgba(232,121,164,0); }
+  }
 
-        .globo span {
-            display: inline-block;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        footer {
-            text-align: center;
-            padding: 3rem;
-            margin-top: 6rem;
-            border-top: 1px solid var(--card-border);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-    </style>
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 860px) {
+    .children-row { flex-direction: column; align-items: center; }
+    .children-row::before { display: none; }
+    .branch-wrap::before { display: none; }
+    .children-row { padding-top: 16px; gap: 14px; }
+    .node, .node.leaf, .node.quote-node { width: min(260px, 90vw); }
+    .node.root { width: min(320px, 92vw); }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>Más allá de la teoría[cite: 1]</h1>
-        <p>Trabajo Práctico Evaluativo Nº 2 - Psicología Organizacional y Laboral[cite: 1]</p>
-    </header>
+<header class="header">
+  <p class="header-eyebrow">TPE N.º 2 · Psicología Organizacional y Laboral · Equipo Pilar + 5</p>
+  <span class="header-hint">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1v7l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/></svg>
+    Tocá los nodos con borde azul para desglosar el mapa
+  </span>
+</header>
 
-    <div class="container">
-        
-        <div style="text-align: center;">
-            <div class="team-info tilt-card" style="padding: 1rem 2rem;">
-                <div class="tilt-content">
-                    <strong>Equipo Pilar + 5:</strong> Aliaga, P. | Ibarra, F. | Lopez Crostelli, D.O. | Plomer, F. | Pereyra Nieto, E. | Vasquez Reyes, E. R.[cite: 1]
-                </div>
-            </div>
-        </div>
+<div class="tree" id="tree">
 
-        <h2 class="section-title">Ejes Transversales de Análisis[cite: 1]</h2>
-        
-        <div class="ejes-grid">
-            <!-- EJE 1 -->
-            <div class="tilt-card">
-                <div class="tilt-content">
-                    <h3>I. Contexto y desarrollo[cite: 1]</h3>
-                    <p>Análisis a partir de los paradigmas de Laloux (naranja, verde, ámbar)[cite: 1]. Se observa cómo las "experiencias de quiebre" (pandemia, rápida expansión) forzaron a los sistemas lejos de su equilibrio, impulsando la autoorganización y adaptabilidad[cite: 1].</p>
-                </div>
-            </div>
-
-            <!-- EJE 2 -->
-            <div class="tilt-card">
-                <div class="tilt-content">
-                    <h3>II. Clima y dinámicas de interacción[cite: 1]</h3>
-                    <p>El clima como variable co-producida en la matriz deliberativa[cite: 1]. Contraste entre canales horizontales (consultora)[cite: 1], tensiones interáreas (inmobiliaria)[cite: 1] y visiones jerárquicas tradicionales de establidad (gastronómico)[cite: 1].</p>
-                </div>
-            </div>
-
-            <!-- EJE 3 -->
-            <div class="tilt-card">
-                <div class="tilt-content">
-                    <h3>III. Selección, formación e innovación[cite: 1]</h3>
-                    <p>Basado en el modelo de la "mesa de cuatro patas" de Souto[cite: 1]. Las estrategias abarcan desde buscar mentalidad flexible[cite: 1], reclutamiento con fin social[cite: 1], hasta capacitaciones constantes para fortalecer el agregado de valor humano frente a la digitalización[cite: 1].</p>
-                </div>
-            </div>
-
-            <!-- EJE 4 -->
-            <div class="tilt-card">
-                <div class="tilt-content">
-                    <h3>IV. La Salud mental[cite: 1]</h3>
-                    <p>El trabajo es más que un espacio productivo[cite: 1]. Se plantea el rol del psicólogo desde una visión profiláctica para dinamizar las matrices vinculares y prevenir riesgos psicosociales (ej. propuesta del área "Mental Care")[cite: 1].</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECCIÓN DE CITAS CON GLOBOS 3D -->
-        <div class="citas-section">
-            <h2 class="section-title">Voces del Campo Organizacional[cite: 1]</h2>
-            <div class="citas-container">
-                
-                <div class="globo tilt-card">
-                    <div class="globo-content tilt-content">
-                        <p>"...nosotros somos una empresa en la cual el organigrama es bastante chato... no creemos por ejemplos en la retención de las personas, creemos en la fidelización de las mismas... si la persona esta bien, la empresa está bien"[cite: 1]</p>
-                        <span>- CEO, Consultora de RRHH[cite: 1]</span>
-                    </div>
-                </div>
-
-                <div class="globo tilt-card">
-                    <div class="globo-content tilt-content">
-                        <p>"...bastantes dura, señala mucho el error ajeno y pierde de vista que los errores de su equipo son propios..."[cite: 1]</p>
-                        <span>- Founder, Inmobiliaria[cite: 1]</span>
-                    </div>
-                </div>
-
-                <div class="globo tilt-card">
-                    <div class="globo-content tilt-content">
-                        <p>"...mantener un clima laboral estables [...] Si apuntan todos para el mismo lado, a todos les va a ir mejor..."[cite: 1]</p>
-                        <span>- Socio Directivo, Gastronómico[cite: 1]</span>
-                    </div>
-                </div>
-
-                <div class="globo tilt-card">
-                    <div class="globo-content tilt-content">
-                        <p>"...la dinámica del dia a dia, de hablar con tantas personas, de escuchar tantas emocionalidades... uno no sabe el abanico que se despierta en una entrevista de trabajo"[cite: 1]</p>
-                        <span>- CEO, Consultora (Sobre salud mental)[cite: 1]</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+  <!-- ══════════════ RAÍZ ══════════════ -->
+  <div class="branch has-children">
+    <div class="node-wrap">
+      <div class="node root clickable" role="button" aria-expanded="false" onclick="toggle(this,'l1')" tabindex="0">
+        <div class="node-title">Más allá de la teoría</div>
+        <div class="node-sub">Análisis organizacional transversal</div>
+        <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+      </div>
     </div>
 
-    <footer>
-        <p>Universidad Católica de Córdoba | 4to Año - Lic. en Psicología</p>
-    </footer>
+    <!-- NIVEL 1 -->
+    <div class="children-row" id="l1">
 
-    <!-- Script de interacción 3D -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const tiltElements = document.querySelectorAll('.tilt-card');
+      <!-- ── EJE I ── -->
+      <div class="branch-wrap">
+        <div class="branch has-children">
+          <div class="node-wrap">
+            <div class="node clickable" role="button" aria-expanded="false" onclick="toggle(this,'eje1')" tabindex="0">
+              <div class="label-eyebrow">Eje I</div>
+              <div class="node-title">Contexto y desarrollo</div>
+              <div class="node-sub">Paradigmas organizacionales</div>
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </div>
+          </div>
+          <div class="children-row single" id="eje1">
+            <div class="branch-wrap">
+              <div class="node leaf">
+                <div class="node-sub">Análisis mediante los paradigmas de Laloux. Las experiencias de quiebre forzaron a los sistemas a la autoorganización y adaptabilidad.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            tiltElements.forEach(element => {
-                element.addEventListener('mousemove', (e) => {
-                    const rect = element.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    // Ajusta estos valores para mayor o menor intensidad del 3D
-                    const rotateX = ((y - centerY) / centerY) * -12; 
-                    const rotateY = ((x - centerX) / centerX) * 12;
+      <!-- ── EJE II ── -->
+      <div class="branch-wrap">
+        <div class="branch has-children">
+          <div class="node-wrap">
+            <div class="node clickable" role="button" aria-expanded="false" onclick="toggle(this,'eje2')" tabindex="0">
+              <div class="label-eyebrow">Eje II</div>
+              <div class="node-title">Clima e interacción</div>
+              <div class="node-sub">Comunicación y vínculos laborales</div>
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </div>
+          </div>
+          <div class="children-row single" id="eje2">
+            <div class="branch-wrap">
+              <div class="node leaf">
+                <div class="node-sub">El clima se co-produce en la matriz deliberativa. Canales horizontales (consultora), tensiones interáreas (inmobiliaria) y visiones jerárquicas (gastronómico).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                    element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
+      <!-- ── EJE III ── -->
+      <div class="branch-wrap">
+        <div class="branch has-children">
+          <div class="node-wrap">
+            <div class="node clickable" role="button" aria-expanded="false" onclick="toggle(this,'eje3')" tabindex="0">
+              <div class="label-eyebrow">Eje III</div>
+              <div class="node-title">Selección y formación</div>
+              <div class="node-sub">Capital humano en la era digital</div>
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </div>
+          </div>
+          <div class="children-row single" id="eje3">
+            <div class="branch-wrap">
+              <div class="node leaf">
+                <div class="node-sub">Modelo de Souto. Búsqueda de mentalidad flexible, reclutamiento social y formación continua para potenciar el valor humano.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                element.addEventListener('mouseleave', () => {
-                    // Retorno suave a la posición original
-                    element.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                    element.style.transition = 'transform 0.5s ease, box-shadow 0.3s ease';
-                });
+      <!-- ── EJE IV ── -->
+      <div class="branch-wrap">
+        <div class="branch has-children">
+          <div class="node-wrap">
+            <div class="node clickable" role="button" aria-expanded="false" onclick="toggle(this,'eje4')" tabindex="0">
+              <div class="label-eyebrow">Eje IV</div>
+              <div class="node-title">La salud mental en el trabajo</div>
+              <div class="node-sub">Rol profiláctico del psicólogo</div>
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </div>
+          </div>
+          <div class="children-row single" id="eje4">
+            <div class="branch-wrap">
+              <div class="node leaf">
+                <div class="node-sub">Prevención de riesgos psicosociales y dinamización de matrices vinculares. Ejemplo: creación del área "Mental Care" en la consultora.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                element.addEventListener('mouseenter', () => {
-                    // Eliminar la transición durante el movimiento para que sea instantáneo
-                    element.style.transition = 'none';
-                });
-            });
-        });
-    </script>
+      <!-- ── VOCES DEL CAMPO ── -->
+      <div class="branch-wrap">
+        <div class="branch has-children">
+          <div class="node-wrap">
+            <div class="node clickable pink-accent" role="button" aria-expanded="false" onclick="toggle(this,'citas')" tabindex="0" style="border-bottom-color: rgba(232,121,164,0.45);">
+              <div class="label-eyebrow" style="color: var(--pink); opacity:0.8;">Testimonios</div>
+              <div class="node-title" style="color: var(--pink);">Voces del campo</div>
+              <div class="node-sub">Entrevistados — tres organizaciones</div>
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </div>
+          </div>
+
+          <div class="children-row" id="citas">
+
+            <div class="branch-wrap">
+              <div class="node quote-node pink-cita">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Si la persona está bien, la empresa está bien.</p>
+                <p class="quote-author">CEO · Consultora de RRHH</p>
+              </div>
+            </div>
+
+            <div class="branch-wrap">
+              <div class="node quote-node pink-cita">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Señala mucho el error ajeno y pierde de vista que los errores de su equipo son propios.</p>
+                <p class="quote-author">Founder · Inmobiliaria</p>
+              </div>
+            </div>
+
+            <div class="branch-wrap">
+              <div class="node quote-node pink-cita">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">Mantener un clima laboral estable… Si apuntan todos para el mismo lado, a todos les va a ir mejor.</p>
+                <p class="quote-author">Socio · Empresa gastronómica</p>
+              </div>
+            </div>
+
+            <div class="branch-wrap">
+              <div class="node quote-node pink-cita">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">La dinámica del día a día… uno no sabe el abanico que se despierta en una entrevista de trabajo.</p>
+                <p class="quote-author">CEO · Consultora (Salud Mental)</p>
+              </div>
+            </div>
+
+          </div><!-- /citas -->
+        </div>
+      </div>
+
+    </div><!-- /nivel 1 -->
+  </div><!-- /raíz -->
+
+</div><!-- /tree -->
+
+<script>
+function toggle(btn, id) {
+  const panel = document.getElementById(id);
+  const open = panel.classList.contains('open');
+
+  panel.classList.toggle('open', !open);
+  btn.classList.toggle('is-open', !open);
+  btn.setAttribute('aria-expanded', String(!open));
+
+  if (!open) {
+    requestAnimationFrame(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+}
+
+document.querySelectorAll('.node.clickable').forEach(n => {
+  n.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      n.click();
+    }
+  });
+});
+</script>
 </body>
 </html>
