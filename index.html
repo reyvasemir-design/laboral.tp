@@ -98,13 +98,11 @@
       align-items: center;
       perspective: 1400px;
       perspective-origin: 50% 45%;
-      /* Altura generosa para que los hijos no se corten */
       min-height: 700px;
       position: relative;
     }
 
     .rings-container {
-      /* Tamaño mayor para dar más espacio a los nodos */
       position: relative;
       width: 620px;
       height: 620px;
@@ -276,6 +274,34 @@
       pointer-events: none; z-index: 0;
     }
 
+    /* BOTÓN DE ENLACE */
+    .btn-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #00d4ff;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      border-radius: 100px;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    .btn-link:hover {
+      background: rgba(0, 212, 255, 0.15);
+      border-color: rgba(0, 212, 255, 0.7);
+      box-shadow: 0 0 35px rgba(0, 212, 255, 0.4);
+      transform: translateY(-2px);
+    }
+    .btn-link:active {
+      transform: translateY(0);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 760px) {
       .rings-container { width: 400px; height: 400px; }
@@ -306,7 +332,7 @@
   <header class="header">
     <div class="eyebrow">TPE N.º 2 · Psicología Organizacional · Equipo Pilar + 5</div>
     <h1>Más allá de la teoría</h1>
-    <p class="sub">Análisis organizacional transversal — Mapa radial 3D</p>
+    <p class="sub">Introduccion, Desarrollo y Conclusion</p>
     <span class="hint">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
         <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
@@ -319,13 +345,18 @@
   <div class="radial-scene" id="radialScene">
     <div class="rings-container" id="ringsContainer">
       <div class="center-node" id="centerNode" role="button" tabindex="0">
-        <div class="title">Más allá de la teoría<span>Análisis transversal</span></div>
+        <div class="title">Más allá de la teoría<span>Análisis</span></div>
       </div>
       <div class="center-ring-pulse"></div>
       <div id="ringsWrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></div>
       <canvas class="particle-canvas" id="particleCanvas"></canvas>
     </div>
   </div>
+
+  <!-- Botón de enlace añadido -->
+  <a href="https://drive.google.com/file/d/1BngfXKf8mTtImvUF6jHM7cmFl5QIlMai/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn-link">
+    Ver documento completo
+  </a>
 </div>
 
 <script>
@@ -342,7 +373,7 @@
         ]
       },
       {
-        id: 'eje2', label: 'Eje II', title: 'Clima e interacción', sub: 'Comunicación y vínculos',
+        id: 'eje2', label: 'Eje II', title: 'Clima organizacional y dinámicas de interacción cognitiva ', sub: 'Comunicación y vínculos',
         children: [
           { id: 'e2_1', label: 'Consultora',   title: 'Diálogo Constante',  sub: 'Reuniones diarias, tensiones prevenidas' },
           { id: 'e2_2', label: 'Inmobiliaria', title: 'Fricción Sistémica', sub: 'Reglas rígidas vs. orientación a cierres' },
@@ -350,7 +381,7 @@
         ]
       },
       {
-        id: 'eje3', label: 'Eje III', title: 'Selección y formación', sub: 'Cultura de innovación',
+        id: 'eje3', label: 'Eje III', title: 'El factor humano: selección, formación y cultura ', sub: 'Cultura de innovación',
         children: [
           { id: 'e3_1', label: 'Consultora',   title: 'Fidelización',       sub: 'Mentalidad flexible y pensamiento crítico' },
           { id: 'e3_2', label: 'Inmobiliaria', title: 'Habilidades Soft',   sub: 'Entrenamiento anual socioemocional' },
@@ -367,9 +398,9 @@
       {
         id: 'citas', label: 'Testimonios', title: 'Voces del campo', sub: 'Entrevistas a líderes',
         children: [
-          { id: 'c1', quote: 'No creemos en la retención... creemos en la fidelización.', author: 'Andrea H. Belgrado' },
-          { id: 'c2', quote: 'Señala el error ajeno y pierde de vista que los errores de su equipo son propios.', author: 'Mariana Geimonat' },
-          { id: 'c3', quote: 'Si apuntan todos para el mismo lado, a todos les va a ir mejor.', author: 'Ramiro Calamera' }
+          { id: 'c1', quote: 'No creemos en la retención... creemos en la fidelización.', author: 'CEO Consultora' },
+          { id: 'c2', quote: 'Señala el error ajeno y pierde de vista que los errores de su equipo son propios.', author: 'CEO Broker Inmobiliario' },
+          { id: 'c3', quote: 'Si apuntan todos para el mismo lado, a todos les va a ir mejor.', author: 'Founder Gastronomico' }
         ]
       }
     ]
@@ -440,9 +471,8 @@
     return Math.min(r.width, r.height) || 620;
   }
 
-  // Devuelve {x, y} en píxeles relativos al centro del contenedor
   function polarToXY(angleDeg, radiusPx) {
-    const rad = (angleDeg - 90) * Math.PI / 180;   // -90 para empezar arriba
+    const rad = (angleDeg - 90) * Math.PI / 180;
     return { x: radiusPx * Math.cos(rad), y: radiusPx * Math.sin(rad) };
   }
 
@@ -454,7 +484,6 @@
     if (!children.length) return;
 
     const size   = getContainerSize();
-    // Radio del primer anillo: 38 % del contenedor → mucho espacio entre centro y primer anillo
     const radius = size * 0.38;
 
     const ringDiv = document.createElement('div');
@@ -465,7 +494,7 @@
     const angleStep = 360 / total;
 
     children.forEach((child, i) => {
-      const angle = i * angleStep;          // distribuidos uniformemente
+      const angle = i * angleStep;
       const { x, y } = polarToXY(angle, radius);
 
       const wrap = document.createElement('div');
@@ -477,13 +506,12 @@
 
       const hasChildren  = child.children && child.children.length > 0;
       const hasQuotes    = hasChildren && child.children[0].quote;
-      const isExpandable = hasChildren;   // todos los que tienen hijos son expandibles
+      const isExpandable = hasChildren;
 
       const node = document.createElement('div');
       node.className = 'node expandable';
       if (hasQuotes) node.classList.add('pink');
 
-      // Todos los nodos padre se muestran igual (título + etiqueta)
       node.innerHTML = `
         <div class="label">${child.label || ''}</div>
         <div class="title">${child.title || ''}</div>
@@ -492,7 +520,6 @@
       `;
       node.dataset.id       = child.id;
       node.dataset.children = JSON.stringify(child.children);
-      // Guardamos el ángulo del padre para orientar los hijos
       node.dataset.angle    = angle;
 
       node.setAttribute('role', 'button');
@@ -530,24 +557,19 @@
     ringsWrapper.appendChild(ringDiv);
 
     const size = getContainerSize();
-    // Radio de segundo nivel: proporcional al del primer nivel para no solapar
     const childRadius = size * 0.21;
 
-    // Posición del padre en px relativo al centro del contenedor
     const parentAngle = parseFloat(nodeEl.dataset.angle || 0);
     const parentRadius = size * 0.38;
     const parentPos   = polarToXY(parentAngle, parentRadius);
 
     const total     = children.length;
-    // Ángulo de partida: alejar los hijos del centro (en dirección del padre)
-    // Para eso centramos el abanico en el ángulo del padre
-    const spreadDeg = Math.min(110, total * 35);   // abanico máximo 110°
+    const spreadDeg = Math.min(110, total * 35);
     const startAngle = parentAngle - spreadDeg / 2;
     const angleStep = total > 1 ? spreadDeg / (total - 1) : 0;
 
     children.forEach((child, i) => {
       const angle = total > 1 ? startAngle + i * angleStep : parentAngle;
-      // Punto en el segundo anillo (relativo al centro del contenedor)
       const { x, y } = polarToXY(angle, parentRadius + childRadius);
 
       const wrap = document.createElement('div');
