@@ -6,14 +6,7 @@
   <title>Más allá de la teoría — Pilar + 5</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
   <style>
-    /* ============================================================
-       RESET Y BASE (tema oscuro futurista)
-    ============================================================ */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: #0b0f1a;
@@ -27,43 +20,36 @@
       align-items: center;
       font-family: 'Inter', sans-serif;
       padding: 2rem 1rem;
-      margin: 0;
       color: #e0e6f0;
     }
 
-    /* Contenedor principal centrado */
     .app {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
     }
 
-    /* ============================================================
-       HEADER (estilo neón sobre fondo oscuro)
-    ============================================================ */
+    /* HEADER */
     .header {
       text-align: center;
       margin-bottom: 2.5rem;
       animation: fadeDown 0.8s ease both;
     }
-
     .header .eyebrow {
       font-size: 0.7rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #8a9bb5;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       display: inline-block;
       padding: 0.25rem 1.2rem;
       border-radius: 100px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255,255,255,0.15);
       backdrop-filter: blur(4px);
       margin-bottom: 0.8rem;
     }
-
     .header h1 {
       font-size: clamp(1.8rem, 5vw, 3.2rem);
       font-weight: 700;
@@ -72,16 +58,14 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.4));
+      filter: drop-shadow(0 0 12px rgba(0,212,255,0.4));
     }
-
     .header .sub {
       font-size: 1rem;
       color: #b0c0d8;
       font-weight: 400;
       margin-top: 0.2rem;
     }
-
     .header .hint {
       display: inline-flex;
       align-items: center;
@@ -90,76 +74,61 @@
       color: #a0b5d0;
       margin-top: 1rem;
       padding: 0.4rem 1.2rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 100px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       backdrop-filter: blur(6px);
-      transition: transform 0.2s, box-shadow 0.3s, border-color 0.3s;
     }
-
-    .header .hint:hover {
-      transform: translateY(-2px) scale(1.02);
-      border-color: rgba(0, 212, 255, 0.6);
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-    }
-
-    .header .hint svg {
-      opacity: 0.6;
-      animation: pulseIcon 2s infinite;
-    }
+    .header .hint svg { opacity: 0.6; animation: pulseIcon 2s infinite; }
 
     @keyframes pulseIcon {
       0%, 100% { transform: scale(1); opacity: 0.6; }
       50% { transform: scale(1.3); opacity: 1; }
     }
-
     @keyframes fadeDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ============================================================
-       ESCENA RADIAL 3D (perspectiva global)
-    ============================================================ */
+    /* ESCENA */
     .radial-scene {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 1200px;
-      perspective-origin: 50% 40%;
-      min-height: 580px;
+      perspective: 1400px;
+      perspective-origin: 50% 45%;
+      /* Altura generosa para que los hijos no se corten */
+      min-height: 700px;
       position: relative;
     }
 
     .rings-container {
+      /* Tamaño mayor para dar más espacio a los nodos */
       position: relative;
-      width: 520px;
-      height: 520px;
+      width: 620px;
+      height: 620px;
       display: flex;
       justify-content: center;
       align-items: center;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
-
     .rings-container.is-rotated {
       transform: rotateX(4deg) rotateY(6deg) rotateZ(1deg);
     }
 
-    /* ============================================================
-       NODO CENTRAL (RAÍZ) - con estilo neón
-    ============================================================ */
+    /* NODO CENTRAL */
     .center-node {
       position: absolute;
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #1e2a3a, #0f1520);
       box-shadow:
-        0 0 30px rgba(0, 212, 255, 0.4),
-        0 0 60px rgba(168, 85, 247, 0.2),
-        0 12px 40px rgba(0, 0, 0, 0.5);
+        0 0 30px rgba(0,212,255,0.4),
+        0 0 60px rgba(168,85,247,0.2),
+        0 12px 40px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -167,798 +136,488 @@
       text-align: center;
       cursor: pointer;
       z-index: 10;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
-      transform: translateZ(20px) rotateX(0deg) rotateY(0deg);
-      will-change: transform;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
+      transform: translateZ(20px);
       padding: 0 12px;
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      font-family: inherit;
+      border: 1px solid rgba(0,212,255,0.4);
     }
-
     .center-node:hover {
-      transform: translateZ(40px) scale(1.04) rotateX(2deg) rotateY(4deg);
-      box-shadow:
-        0 0 50px rgba(0, 212, 255, 0.6),
-        0 0 90px rgba(168, 85, 247, 0.3),
-        0 20px 60px rgba(0, 0, 0, 0.6);
+      transform: translateZ(40px) scale(1.04);
+      box-shadow: 0 0 50px rgba(0,212,255,0.6), 0 0 90px rgba(168,85,247,0.3), 0 20px 60px rgba(0,0,0,0.6);
     }
-
-    .center-node:active {
-      transform: translateZ(10px) scale(0.96);
-    }
-
     .center-node .title {
-      font-size: 1.2rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      color: #ffffff;
+      color: #fff;
       line-height: 1.2;
-      pointer-events: none;
-      text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      text-shadow: 0 0 8px rgba(0,212,255,0.5);
     }
-
     .center-node .title span {
       display: block;
       font-weight: 400;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #b0c0d8;
       margin-top: 2px;
     }
 
     .center-ring-pulse {
       position: absolute;
-      width: 160px;
-      height: 160px;
+      width: 155px;
+      height: 155px;
       border-radius: 50%;
-      border: 2px solid rgba(0, 212, 255, 0.3);
+      border: 2px solid rgba(0,212,255,0.3);
       animation: ringPulse 2.8s ease-in-out infinite;
       pointer-events: none;
       z-index: 1;
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
     }
-
     @keyframes ringPulse {
-      0% { transform: scale(0.9); opacity: 0.8; }
-      50% { transform: scale(1.3); opacity: 0.1; }
+      0%   { transform: scale(0.9); opacity: 0.8; }
+      50%  { transform: scale(1.3); opacity: 0.1; }
       100% { transform: scale(0.9); opacity: 0.8; }
     }
 
-    /* ============================================================
-       ANILLOS DE NODOS (disposición circular)
-    ============================================================ */
+    /* ANILLOS */
     .ring {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(0deg) translateZ(0);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
       transform-style: preserve-3d;
       pointer-events: none;
+      width: 100%;
+      height: 100%;
     }
-
     .ring .node-wrap {
       position: absolute;
       pointer-events: auto;
       transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s;
+      transition: opacity 0.4s;
     }
 
+    /* NODOS */
     .ring .node {
-      width: 110px;
-      padding: 0.8rem 0.6rem;
+      width: 115px;
+      padding: 0.85rem 0.7rem;
       border-radius: 18px;
-      background: rgba(20, 28, 45, 0.9);
+      background: rgba(20,28,45,0.92);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 15px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
       text-align: center;
       cursor: pointer;
       transition:
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
         box-shadow 0.3s,
         border-color 0.3s,
         background 0.3s;
-      transform: translateZ(0) rotateX(0deg) rotateY(0deg);
-      will-change: transform;
+      transform: translateZ(0);
       font-family: inherit;
       color: #e0e6f0;
     }
-
     .ring .node:hover {
-      transform: translateZ(30px) rotateX(4deg) rotateY(6deg) scale(1.06);
-      background: rgba(30, 40, 65, 0.95);
-      border-color: rgba(0, 212, 255, 0.6);
-      box-shadow: 0 0 25px rgba(0, 212, 255, 0.3), 0 16px 48px rgba(0, 0, 0, 0.6);
+      transform: translateZ(28px) scale(1.06);
+      background: rgba(30,40,65,0.97);
+      border-color: rgba(0,212,255,0.6);
+      box-shadow: 0 0 25px rgba(0,212,255,0.3), 0 16px 48px rgba(0,0,0,0.6);
     }
-
-    .ring .node:active {
-      transform: translateZ(6px) scale(0.94);
-    }
-
-    .ring .node.leaf {
-      cursor: default;
-      background: rgba(15, 22, 35, 0.8);
-      border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: none;
-    }
-
-    .ring .node.leaf:hover {
-      transform: translateZ(10px) rotateX(1deg) rotateY(2deg);
-      box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
-    }
+    .ring .node.leaf { cursor: default; background: rgba(15,22,35,0.82); border-color: rgba(255,255,255,0.08); }
+    .ring .node.leaf:hover { transform: translateZ(10px); box-shadow: 0 0 12px rgba(0,212,255,0.2); }
 
     .ring .node.quote-node {
-      background: rgba(30, 20, 35, 0.9);
+      background: rgba(30,20,35,0.92);
       border-left: 4px solid #ff4ecd;
       text-align: left;
-      padding: 0.7rem 0.8rem;
-      width: 120px;
+      padding: 0.75rem 0.8rem;
+      width: 125px;
       cursor: default;
     }
-
     .ring .node.quote-node:hover {
-      transform: translateZ(20px) rotateY(-4deg) scale(1.04);
-      box-shadow: 0 0 25px rgba(255, 78, 205, 0.4);
+      transform: translateZ(20px) scale(1.04);
+      box-shadow: 0 0 25px rgba(255,78,205,0.4);
     }
 
-    .ring .node .label {
-      font-size: 0.55rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #8a9bb5;
-      margin-bottom: 2px;
-    }
+    .ring .node .label { font-size: 0.53rem; text-transform: uppercase; letter-spacing: 0.08em; color: #8a9bb5; margin-bottom: 2px; }
+    .ring .node .title { font-size: 0.88rem; font-weight: 600; color: #fff; line-height: 1.2; }
+    .ring .node .sub   { font-size: 0.7rem; color: #b0c0d8; line-height: 1.3; margin-top: 2px; }
+    .ring .node .quote-text   { font-size: 0.74rem; font-style: italic; color: #d0d8e8; line-height: 1.4; }
+    .ring .node .quote-author { font-size: 0.58rem; font-weight: 600; color: #ff4ecd; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+    .ring .node .quote-mark   { font-size: 1.4rem; color: #ff4ecd; opacity: 0.5; line-height: 0.8; display: block; font-family: Georgia, serif; }
 
-    .ring .node .title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-
-    .ring .node .sub {
-      font-size: 0.7rem;
-      color: #b0c0d8;
-      line-height: 1.3;
-    }
-
-    .ring .node .quote-text {
-      font-size: 0.75rem;
-      font-style: italic;
-      color: #d0d8e8;
-      line-height: 1.4;
-    }
-
-    .ring .node .quote-author {
-      font-size: 0.6rem;
-      font-weight: 600;
-      color: #ff4ecd;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 4px;
-    }
-
-    .ring .node .quote-mark {
-      font-size: 1.4rem;
-      color: #ff4ecd;
-      opacity: 0.5;
-      line-height: 0.8;
-      display: block;
-      font-family: Georgia, serif;
-    }
-
-    /* ============================================================
-       NODOS DE EXPANSIÓN (con chevron o indicador)
-    ============================================================ */
-    .ring .node.expandable {
-      border-bottom: 2px solid rgba(0, 212, 255, 0.4);
-      cursor: pointer;
-    }
-
-    .ring .node.expandable.pink {
-      border-bottom-color: rgba(255, 78, 205, 0.5);
-    }
-
+    /* EXPANDIBLE */
+    .ring .node.expandable { border-bottom: 2px solid rgba(0,212,255,0.4); }
+    .ring .node.expandable.pink { border-bottom-color: rgba(255,78,205,0.5); }
     .ring .node.expandable .chevron {
       display: inline-block;
       margin-left: 4px;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      font-size: 0.8rem;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      font-size: 0.78rem;
       color: #8a9bb5;
     }
-
-    .ring .node.expandable.open .chevron {
-      transform: rotate(180deg) scale(1.2);
-      color: #00d4ff;
-    }
-
-    .ring .node.expandable.pink.open .chevron {
-      color: #ff4ecd;
-    }
-
+    .ring .node.expandable.open .chevron   { transform: rotate(180deg) scale(1.2); color: #00d4ff; }
+    .ring .node.expandable.pink.open .chevron { color: #ff4ecd; }
     .ring .node.expandable.open {
-      box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.2), 0 0 25px rgba(0, 212, 255, 0.3);
-      border-color: rgba(0, 212, 255, 0.5);
+      box-shadow: 0 0 0 4px rgba(0,212,255,0.2), 0 0 25px rgba(0,212,255,0.3);
+      border-color: rgba(0,212,255,0.5);
     }
-
     .ring .node.expandable.pink.open {
-      box-shadow: 0 0 0 4px rgba(255, 78, 205, 0.2), 0 0 25px rgba(255, 78, 205, 0.3);
-      border-color: rgba(255, 78, 205, 0.5);
+      box-shadow: 0 0 0 4px rgba(255,78,205,0.2), 0 0 25px rgba(255,78,205,0.3);
+      border-color: rgba(255,78,205,0.5);
     }
 
-    /* ============================================================
-       ANIMACIONES DE ENTRADA PARA LOS ANILLOS (3D)
-    ============================================================ */
     @keyframes ringAppear {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) rotateY(90deg) scale(0.6) translateZ(-80px);
-      }
-      60% {
-        opacity: 0.9;
-        transform: translate(-50%, -50%) rotateY(-10deg) scale(1.05) translateZ(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) rotateY(0deg) scale(1) translateZ(0);
-      }
+      0%   { opacity: 0; transform: translate(-50%,-50%) rotateY(90deg) scale(0.6); }
+      60%  { opacity: 0.9; transform: translate(-50%,-50%) rotateY(-8deg) scale(1.04); }
+      100% { opacity: 1; transform: translate(-50%,-50%) rotateY(0deg) scale(1); }
     }
+    .ring.appear { animation: ringAppear 0.65s cubic-bezier(0.23,1,0.32,1) both; }
 
-    .ring.appear {
-      animation: ringAppear 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
-    }
-
-    /* ============================================================
-       PARTÍCULAS / CONEXIONES (efecto de líneas entre nodos)
-    ============================================================ */
     .particle-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
     }
 
-    /* ============================================================
-       RESPONSIVE (igual que antes, adaptado a colores oscuros)
-    ============================================================ */
+    /* RESPONSIVE */
     @media (max-width: 760px) {
-      .rings-container {
-        width: 360px;
-        height: 360px;
-      }
-
-      .center-node {
-        width: 100px;
-        height: 100px;
-      }
-
-      .center-node .title {
-        font-size: 0.9rem;
-      }
-
-      .center-ring-pulse {
-        width: 120px;
-        height: 120px;
-      }
-
-      .ring .node {
-        width: 80px;
-        padding: 0.5rem 0.4rem;
-      }
-
-      .ring .node .title {
-        font-size: 0.7rem;
-      }
-
-      .ring .node .sub {
-        font-size: 0.6rem;
-      }
-
-      .ring .node.quote-node {
-        width: 90px;
-        padding: 0.5rem;
-      }
-
-      .ring .node .quote-text {
-        font-size: 0.65rem;
-      }
+      .rings-container { width: 400px; height: 400px; }
+      .center-node { width: 95px; height: 95px; }
+      .center-node .title { font-size: 0.85rem; }
+      .center-ring-pulse { width: 115px; height: 115px; }
+      .ring .node { width: 85px; padding: 0.5rem 0.4rem; }
+      .ring .node .title { font-size: 0.72rem; }
+      .ring .node .sub { font-size: 0.6rem; }
+      .ring .node.quote-node { width: 95px; }
+      .ring .node .quote-text { font-size: 0.63rem; }
     }
-
     @media (max-width: 480px) {
-      .rings-container {
-        width: 280px;
-        height: 280px;
-      }
-
-      .center-node {
-        width: 80px;
-        height: 80px;
-      }
-
-      .center-node .title {
-        font-size: 0.75rem;
-      }
-
-      .center-ring-pulse {
-        width: 96px;
-        height: 96px;
-      }
-
-      .ring .node {
-        width: 64px;
-        padding: 0.3rem 0.2rem;
-        border-radius: 12px;
-      }
-
-      .ring .node .title {
-        font-size: 0.6rem;
-      }
-
-      .ring .node .sub {
-        font-size: 0.5rem;
-      }
-
-      .ring .node.quote-node {
-        width: 74px;
-        padding: 0.4rem;
-      }
-
-      .ring .node .quote-text {
-        font-size: 0.55rem;
-      }
-    }
-
-    /* ============================================================
-       UTILITARIOS PARA OCULTAR/MOSTRAR (manejado por JS)
-    ============================================================ */
-    .hidden {
-      display: none !important;
+      .rings-container { width: 310px; height: 310px; }
+      .center-node { width: 78px; height: 78px; }
+      .center-node .title { font-size: 0.72rem; }
+      .center-ring-pulse { width: 94px; height: 94px; }
+      .ring .node { width: 68px; padding: 0.3rem 0.25rem; border-radius: 12px; }
+      .ring .node .title { font-size: 0.6rem; }
+      .ring .node .sub { font-size: 0.5rem; }
+      .ring .node.quote-node { width: 78px; }
+      .ring .node .quote-text { font-size: 0.54rem; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <!-- HEADER -->
-    <header class="header">
-      <div class="eyebrow">TPE N.º 2 · Psicología Organizacional · Equipo Pilar + 5</div>
-      <h1>Más allá de la teoría</h1>
-      <p class="sub">Análisis organizacional transversal — Mapa radial 3D</p>
-      <span class="hint">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
-          <path d="M8 2v6l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        Haz clic en los nodos con borde para expandir
-      </span>
-    </header>
+<div class="app">
+  <header class="header">
+    <div class="eyebrow">TPE N.º 2 · Psicología Organizacional · Equipo Pilar + 5</div>
+    <h1>Más allá de la teoría</h1>
+    <p class="sub">Análisis organizacional transversal — Mapa radial 3D</p>
+    <span class="hint">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8 2v6l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      Haz clic en los nodos con borde para expandir
+    </span>
+  </header>
 
-    <!-- ESCENA RADIAL -->
-    <div class="radial-scene" id="radialScene">
-      <div class="rings-container" id="ringsContainer">
-        <!-- Círculo central (raíz) -->
-        <div class="center-node" id="centerNode" role="button" tabindex="0" aria-expanded="false">
-          <div class="title">
-            Más allá de la teoría
-            <span>Análisis transversal</span>
-          </div>
-        </div>
-        <div class="center-ring-pulse"></div>
-
-        <!-- Aquí se inyectarán los anillos dinámicamente con JS -->
-        <div id="ringsWrapper" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></div>
-
-        <!-- Canvas para partículas (conexiones) -->
-        <canvas class="particle-canvas" id="particleCanvas"></canvas>
+  <div class="radial-scene" id="radialScene">
+    <div class="rings-container" id="ringsContainer">
+      <div class="center-node" id="centerNode" role="button" tabindex="0">
+        <div class="title">Más allá de la teoría<span>Análisis transversal</span></div>
       </div>
+      <div class="center-ring-pulse"></div>
+      <div id="ringsWrapper" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></div>
+      <canvas class="particle-canvas" id="particleCanvas"></canvas>
     </div>
   </div>
+</div>
 
-  <script>
-    // ============================================================
-    //  DATOS DE LA ESTRUCTURA (Ampliada con la información del PDF)
-    // ============================================================
-    const data = {
-      id: 'root',
-      label: 'Raíz',
-      children: [
-        {
-          id: 'eje1',
-          label: 'Eje I',
-          title: 'Contexto y desarrollo',
-          sub: 'Paradigmas organizacionales',
-          detail: 'Análisis mediante los paradigmas de Laloux. Las experiencias de quiebre forzaron a la autoorganización.',
-          children: [
-            { id: 'e1_1', label: 'Consultora', title: 'Naranja y Verde', sub: 'Eficiencia de negocio y horizontalidad comunitaria' },
-            { id: 'e1_2', label: 'Inmobiliaria', title: 'Ámbar y Verde', sub: 'Control administrativo versus empatía comercial' },
-            { id: 'e1_3', label: 'Gastronómico', title: 'Transición Naranja', sub: 'Tensión entre jerarquía tradicional y digitalización' }
-          ]
-        },
-        {
-          id: 'eje2',
-          label: 'Eje II',
-          title: 'Clima e interacción',
-          sub: 'Comunicación y vínculos',
-          detail: 'El clima se co-produce en la matriz deliberativa y la calidad interaccional.',
-          children: [
-            { id: 'e2_1', label: 'Consultora', title: 'Diálogo Constante', sub: 'Reuniones diarias previenen tensiones reprimidas' },
-            { id: 'e2_2', label: 'Inmobiliaria', title: 'Fricción Sistémica', sub: 'Choque entre reglas rígidas y orientación a cierres' },
-            { id: 'e2_3', label: 'Gastronómico', title: 'Control Vertical', sub: 'Estabilidad alineada a las directivas del dueño' }
-          ]
-        },
-        {
-          id: 'eje3',
-          label: 'Eje III',
-          title: 'Selección y formación',
-          sub: 'Cultura de innovación',
-          detail: 'Modelo de Souto: Equilibrio entre selección, reclutamiento y formación.',
-          children: [
-            { id: 'e3_1', label: 'Consultora', title: 'Fidelización', sub: 'Búsqueda de mentalidad flexible y pensamiento crítico' },
-            { id: 'e3_2', label: 'Inmobiliaria', title: 'Habilidades Soft', sub: 'Entrenamiento anual en competencias socioemocionales' },
-            { id: 'e3_3', label: 'Gastronómico', title: 'Moldear Perfiles', sub: 'Reclutamiento preferente de jóvenes sin experiencia' }
-          ]
-        },
-        {
-          id: 'eje4',
-          label: 'Eje IV',
-          title: 'La salud mental',
-          sub: 'Rol profiláctico',
-          detail: 'Prevención del deterioro subjetivo y social ante la tensión laboral.',
-          children: [
-            { id: 'e4_1', label: 'Mental Care', title: 'Consultora', sub: 'Proyecto de área para contener el desgaste emocional' },
-            { id: 'e4_2', label: 'Intervención', title: 'Psicólogo Laboral', sub: 'Dinamización de matrices vinculares y cognitivas' }
-          ]
-        },
-        {
-          id: 'citas',
-          label: 'Testimonios',
-          title: 'Voces del campo',
-          sub: 'Entrevistas a líderes',
-          children: [
-            { id: 'c1', label: 'CEO Consultora', quote: 'No creemos en la retención... creemos en la fidelización.', author: 'Andrea H. Belgrado' },
-            { id: 'c2', label: 'Founder Inmobiliaria', quote: 'Señala mucho el error ajeno y pierde de vista que los errores de su equipo son propios.', author: 'Mariana Geimonat' },
-            { id: 'c3', label: 'Socio Gastronómico', quote: 'Si apuntan todos para el mismo lado, a todos les va a ir mejor.', author: 'Ramiro Calamera' }
-          ]
-        }
-      ]
-    };
-
-    // ============================================================
-    //  ESTADO Y REFERENCIAS
-    // ============================================================
-    const container = document.getElementById('ringsContainer');
-    const centerNode = document.getElementById('centerNode');
-    const ringsWrapper = document.getElementById('ringsWrapper');
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let particles = [];
-    let animationFrame = null;
-    let expandedNodes = new Set();
-
-    // ============================================================
-    //  UTILIDADES
-    // ============================================================
-    function degToRad(deg) {
-      return deg * Math.PI / 180;
-    }
-
-    // ============================================================
-    //  DIBUJAR PARTÍCULAS (conexiones 3D entre nodos)
-    // ============================================================
-    function initParticles() {
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width || 520;
-      canvas.height = rect.height || 520;
-      particles = [];
-
-      for (let i = 0; i < 30; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 2 + 1,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          color: `rgba(0, 212, 255, ${Math.random() * 0.3 + 0.1})`
-        });
+<script>
+  // ── DATOS ─────────────────────────────────────────────────────
+  const data = {
+    id: 'root',
+    children: [
+      {
+        id: 'eje1', label: 'Eje I', title: 'Contexto y desarrollo', sub: 'Paradigmas organizacionales',
+        children: [
+          { id: 'e1_1', label: 'Consultora',   title: 'Naranja y Verde',      sub: 'Eficiencia de negocio y horizontalidad' },
+          { id: 'e1_2', label: 'Inmobiliaria', title: 'Ámbar y Verde',        sub: 'Control administrativo vs. empatía' },
+          { id: 'e1_3', label: 'Gastronómico', title: 'Transición Naranja',   sub: 'Jerarquía tradicional y digitalización' }
+        ]
+      },
+      {
+        id: 'eje2', label: 'Eje II', title: 'Clima e interacción', sub: 'Comunicación y vínculos',
+        children: [
+          { id: 'e2_1', label: 'Consultora',   title: 'Diálogo Constante',  sub: 'Reuniones diarias, tensiones prevenidas' },
+          { id: 'e2_2', label: 'Inmobiliaria', title: 'Fricción Sistémica', sub: 'Reglas rígidas vs. orientación a cierres' },
+          { id: 'e2_3', label: 'Gastronómico', title: 'Control Vertical',   sub: 'Estabilidad alineada al dueño' }
+        ]
+      },
+      {
+        id: 'eje3', label: 'Eje III', title: 'Selección y formación', sub: 'Cultura de innovación',
+        children: [
+          { id: 'e3_1', label: 'Consultora',   title: 'Fidelización',       sub: 'Mentalidad flexible y pensamiento crítico' },
+          { id: 'e3_2', label: 'Inmobiliaria', title: 'Habilidades Soft',   sub: 'Entrenamiento anual socioemocional' },
+          { id: 'e3_3', label: 'Gastronómico', title: 'Moldear Perfiles',   sub: 'Reclutamiento de jóvenes sin experiencia' }
+        ]
+      },
+      {
+        id: 'eje4', label: 'Eje IV', title: 'La salud mental', sub: 'Rol profiláctico',
+        children: [
+          { id: 'e4_1', label: 'Mental Care',  title: 'Consultora',        sub: 'Contención del desgaste emocional' },
+          { id: 'e4_2', label: 'Intervención', title: 'Psicólogo Laboral', sub: 'Dinamización de matrices vinculares' }
+        ]
+      },
+      {
+        id: 'citas', label: 'Testimonios', title: 'Voces del campo', sub: 'Entrevistas a líderes',
+        children: [
+          { id: 'c1', quote: 'No creemos en la retención... creemos en la fidelización.', author: 'Andrea H. Belgrado' },
+          { id: 'c2', quote: 'Señala el error ajeno y pierde de vista que los errores de su equipo son propios.', author: 'Mariana Geimonat' },
+          { id: 'c3', quote: 'Si apuntan todos para el mismo lado, a todos les va a ir mejor.', author: 'Ramiro Calamera' }
+        ]
       }
+    ]
+  };
 
-      drawParticles();
+  // ── REFERENCIAS ───────────────────────────────────────────────
+  const container    = document.getElementById('ringsContainer');
+  const centerNode   = document.getElementById('centerNode');
+  const ringsWrapper = document.getElementById('ringsWrapper');
+  const canvas       = document.getElementById('particleCanvas');
+  const ctx          = canvas.getContext('2d');
+
+  let particles = [], animFrame = null;
+  let expandedNodes = new Set();
+
+  // ── PARTÍCULAS ────────────────────────────────────────────────
+  function initParticles() {
+    const r = container.getBoundingClientRect();
+    canvas.width  = r.width  || 620;
+    canvas.height = r.height || 620;
+    particles = [];
+    for (let i = 0; i < 32; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 0.8,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        color: `rgba(0,212,255,${(Math.random() * 0.25 + 0.08).toFixed(2)})`
+      });
     }
+    if (animFrame) cancelAnimationFrame(animFrame);
+    drawParticles();
+  }
 
-    function drawParticles() {
-      if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Dibujar líneas entre partículas cercanas
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.08 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < 110) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,212,255,${(0.07*(1-d/110)).toFixed(3)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
         }
       }
-
-      // Dibujar partículas
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-      });
-
-      // Actualizar posiciones
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      });
-
-      animationFrame = requestAnimationFrame(drawParticles);
     }
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width)  p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    });
+    animFrame = requestAnimationFrame(drawParticles);
+  }
 
-    // ============================================================
-    //  CREAR ANILLOS Y NODOS (dinámico)
-    // ============================================================
-    function buildRings() {
-      // Limpiar anillos anteriores
-      ringsWrapper.querySelectorAll('.ring').forEach(r => r.remove());
+  // ── HELPERS DE POSICIÓN ───────────────────────────────────────
+  function getContainerSize() {
+    const r = container.getBoundingClientRect();
+    return Math.min(r.width, r.height) || 620;
+  }
 
-      const children = data.children;
-      if (!children || children.length === 0) return;
+  // Devuelve {x, y} en píxeles relativos al centro del contenedor
+  function polarToXY(angleDeg, radiusPx) {
+    const rad = (angleDeg - 90) * Math.PI / 180;   // -90 para empezar arriba
+    return { x: radiusPx * Math.cos(rad), y: radiusPx * Math.sin(rad) };
+  }
 
-      const rect = container.getBoundingClientRect();
-      const baseSize = Math.min(rect.width, rect.height) || 500;
-      const radius = baseSize * 0.32;
+  // ── CONSTRUIR ANILLO PRIMARIO ─────────────────────────────────
+  function buildRings() {
+    ringsWrapper.querySelectorAll('.ring').forEach(r => r.remove());
 
-      const ringDiv = document.createElement('div');
-      ringDiv.className = 'ring appear';
-      ringDiv.style.width = '100%';
-      ringDiv.style.height = '100%';
-      ringDiv.style.pointerEvents = 'none';
-      ringsWrapper.appendChild(ringDiv);
+    const children = data.children;
+    if (!children.length) return;
 
-      const total = children.length;
-      const angleStep = (2 * Math.PI) / total;
-      const startAngle = -Math.PI / 2; // empezar arriba
+    const size   = getContainerSize();
+    // Radio del primer anillo: 38 % del contenedor → mucho espacio entre centro y primer anillo
+    const radius = size * 0.38;
 
-      children.forEach((child, index) => {
-        const angle = startAngle + index * angleStep;
-        const x = radius * Math.cos(angle);
-        const y = radius * Math.sin(angle);
+    const ringDiv = document.createElement('div');
+    ringDiv.className = 'ring appear';
+    ringsWrapper.appendChild(ringDiv);
 
-        const wrap = document.createElement('div');
-        wrap.className = 'node-wrap';
-        wrap.style.left = `calc(50% + ${x}px)`;
-        wrap.style.top = `calc(50% + ${y}px)`;
-        wrap.style.transform = 'translate(-50%, -50%)';
-        wrap.style.pointerEvents = 'auto';
-        wrap.style.zIndex = 2;
+    const total     = children.length;
+    const angleStep = 360 / total;
 
-        const isQuote = child.children && child.children.length > 0 && child.children[0].quote;
-        const isExpandable = child.children && child.children.length > 0 && !isQuote;
-        const isLeaf = !isExpandable && !isQuote;
+    children.forEach((child, i) => {
+      const angle = i * angleStep;          // distribuidos uniformemente
+      const { x, y } = polarToXY(angle, radius);
 
-        const node = document.createElement('div');
-        node.className = 'node';
-        if (isLeaf) node.classList.add('leaf');
-        if (isExpandable) {
-          node.classList.add('expandable');
-          if (child.id === 'citas') node.classList.add('pink');
-        }
-        if (isQuote) node.classList.add('quote-node');
+      const wrap = document.createElement('div');
+      wrap.className = 'node-wrap';
+      wrap.style.left      = `calc(50% + ${x}px)`;
+      wrap.style.top       = `calc(50% + ${y}px)`;
+      wrap.style.transform = 'translate(-50%, -50%)';
+      wrap.style.zIndex    = '2';
 
-        if (isQuote) {
-          const q = child.children[0];
-          node.innerHTML = `
-            <span class="quote-mark">"</span>
-            <div class="quote-text">${q.quote}</div>
-            <div class="quote-author">${q.author}</div>
-          `;
-          node.dataset.quotes = JSON.stringify(child.children);
-          node.dataset.id = child.id;
-          node.classList.add('expandable', 'pink');
-        } else {
-          const label = child.label || '';
-          const title = child.title || '';
-          const sub = child.sub || '';
-          node.innerHTML = `
-            <div class="label">${label}</div>
-            <div class="title">${title}</div>
-            <div class="sub">${sub}</div>
-            ${isExpandable ? '<span class="chevron">▼</span>' : ''}
-          `;
-          if (isExpandable) {
-            node.dataset.id = child.id;
-            node.dataset.children = JSON.stringify(child.children || []);
-          }
-        }
+      const hasChildren  = child.children && child.children.length > 0;
+      const hasQuotes    = hasChildren && child.children[0].quote;
+      const isExpandable = hasChildren;   // todos los que tienen hijos son expandibles
 
-        // Si es expandible (tiene hijos y no es cita, o es cita con varias)
-        if (isExpandable || (isQuote && child.children && child.children.length > 1)) {
-          node.classList.add('expandable');
-          if (child.id === 'citas' || isQuote) node.classList.add('pink');
-          node.dataset.id = child.id;
-          node.dataset.children = JSON.stringify(child.children || []);
+      const node = document.createElement('div');
+      node.className = 'node expandable';
+      if (hasQuotes) node.classList.add('pink');
 
-          node.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleNode(this, child.id);
-          });
+      // Todos los nodos padre se muestran igual (título + etiqueta)
+      node.innerHTML = `
+        <div class="label">${child.label || ''}</div>
+        <div class="title">${child.title || ''}</div>
+        <div class="sub">${child.sub || ''}</div>
+        <span class="chevron">▼</span>
+      `;
+      node.dataset.id       = child.id;
+      node.dataset.children = JSON.stringify(child.children);
+      // Guardamos el ángulo del padre para orientar los hijos
+      node.dataset.angle    = angle;
 
-          node.setAttribute('role', 'button');
-          node.setAttribute('tabindex', '0');
-          node.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              this.click();
-            }
-          });
-        }
+      node.setAttribute('role', 'button');
+      node.setAttribute('tabindex', '0');
+      node.addEventListener('click', e => { e.stopPropagation(); toggleNode(node, child.id); });
+      node.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); node.click(); } });
 
-        wrap.appendChild(node);
-        ringDiv.appendChild(wrap);
-      });
+      wrap.appendChild(node);
+      ringDiv.appendChild(wrap);
+    });
 
-      setTimeout(initParticles, 100);
-    }
+    setTimeout(initParticles, 100);
+  }
 
-    // ============================================================
-    //  TOGGLE NODO (expansión con animación 3D)
-    // ============================================================
-    function toggleNode(nodeElement, id) {
-      if (nodeElement.classList.contains('open')) {
-        closeNode(nodeElement, id);
+  // ── TOGGLE ────────────────────────────────────────────────────
+  function toggleNode(nodeEl, id) {
+    nodeEl.classList.contains('open') ? closeNode(nodeEl, id) : openNode(nodeEl, id);
+  }
+
+  function openNode(nodeEl, id) {
+    if (nodeEl.classList.contains('open')) return;
+
+    let children = [];
+    try { children = JSON.parse(nodeEl.dataset.children || '[]'); } catch(e) {}
+    if (!children.length) return;
+
+    nodeEl.classList.add('open');
+    expandedNodes.add(id);
+
+    const ringId = 'ring-' + id;
+    const ringDiv = document.createElement('div');
+    ringDiv.id        = ringId;
+    ringDiv.className = 'ring appear';
+    ringDiv.dataset.parentId = id;
+    ringsWrapper.appendChild(ringDiv);
+
+    const size = getContainerSize();
+    // Radio de segundo nivel: proporcional al del primer nivel para no solapar
+    const childRadius = size * 0.21;
+
+    // Posición del padre en px relativo al centro del contenedor
+    const parentAngle = parseFloat(nodeEl.dataset.angle || 0);
+    const parentRadius = size * 0.38;
+    const parentPos   = polarToXY(parentAngle, parentRadius);
+
+    const total     = children.length;
+    // Ángulo de partida: alejar los hijos del centro (en dirección del padre)
+    // Para eso centramos el abanico en el ángulo del padre
+    const spreadDeg = Math.min(110, total * 35);   // abanico máximo 110°
+    const startAngle = parentAngle - spreadDeg / 2;
+    const angleStep = total > 1 ? spreadDeg / (total - 1) : 0;
+
+    children.forEach((child, i) => {
+      const angle = total > 1 ? startAngle + i * angleStep : parentAngle;
+      // Punto en el segundo anillo (relativo al centro del contenedor)
+      const { x, y } = polarToXY(angle, parentRadius + childRadius);
+
+      const wrap = document.createElement('div');
+      wrap.className   = 'node-wrap';
+      wrap.style.left  = `calc(50% + ${x}px)`;
+      wrap.style.top   = `calc(50% + ${y}px)`;
+      wrap.style.transform = 'translate(-50%, -50%)';
+      wrap.style.zIndex = '3';
+
+      const node = document.createElement('div');
+
+      if (child.quote) {
+        node.className = 'node quote-node';
+        node.innerHTML = `
+          <span class="quote-mark">"</span>
+          <div class="quote-text">${child.quote}</div>
+          <div class="quote-author">${child.author || ''}</div>
+        `;
       } else {
-        openNode(nodeElement, id);
-      }
-    }
-
-    function openNode(nodeElement, id) {
-      if (nodeElement.classList.contains('open')) return;
-
-      let childrenData = [];
-      try {
-        const raw = nodeElement.dataset.children;
-        if (raw) childrenData = JSON.parse(raw);
-      } catch (e) {}
-
-      if (!childrenData || childrenData.length === 0) return;
-
-      nodeElement.classList.add('open');
-      expandedNodes.add(id);
-
-      const ringDiv = document.createElement('div');
-      const ringId = 'ring-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
-      ringDiv.id = ringId;
-      ringDiv.className = 'ring appear';
-      ringDiv.style.width = '100%';
-      ringDiv.style.height = '100%';
-      ringDiv.style.pointerEvents = 'none';
-      ringDiv.dataset.parentId = id;
-      ringsWrapper.appendChild(ringDiv);
-
-      const rect = container.getBoundingClientRect();
-      const baseSize = Math.min(rect.width, rect.height) || 500;
-      const radius = baseSize * 0.22;
-
-      const parentRect = nodeElement.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const parentCenterX = parentRect.left + parentRect.width / 2 - containerRect.left;
-      const parentCenterY = parentRect.top + parentRect.height / 2 - containerRect.top;
-
-      const total = childrenData.length;
-      const angleStep = (2 * Math.PI) / total;
-      const startAngle = -Math.PI / 2;
-
-      childrenData.forEach((child, index) => {
-        const angle = startAngle + index * angleStep;
-        const x = radius * Math.cos(angle) + parentCenterX - containerRect.width / 2;
-        const y = radius * Math.sin(angle) + parentCenterY - containerRect.height / 2;
-
-        const wrap = document.createElement('div');
-        wrap.className = 'node-wrap';
-        wrap.style.left = `calc(50% + ${x}px)`;
-        wrap.style.top = `calc(50% + ${y}px)`;
-        wrap.style.transform = 'translate(-50%, -50%)';
-        wrap.style.pointerEvents = 'auto';
-        wrap.style.zIndex = 3;
-
-        const node = document.createElement('div');
         node.className = 'node leaf';
-
-        if (child.quote) {
-          node.className = 'node quote-node';
-          node.innerHTML = `
-            <span class="quote-mark">"</span>
-            <div class="quote-text">${child.quote}</div>
-            <div class="quote-author">${child.author || ''}</div>
-          `;
-        } else {
-          node.innerHTML = `
-            <div class="label">${child.label || ''}</div>
-            <div class="title">${child.title || ''}</div>
-            <div class="sub">${child.sub || child.detail || ''}</div>
-          `;
-        }
-
-        wrap.appendChild(node);
-        ringDiv.appendChild(wrap);
-      });
-
-      container.classList.add('is-rotated');
-      nodeElement.dataset.childRingId = ringId;
-      setTimeout(initParticles, 200);
-    }
-
-    function closeNode(nodeElement, id) {
-      if (!nodeElement.classList.contains('open')) return;
-
-      const ringId = nodeElement.dataset.childRingId;
-      if (ringId) {
-        const ring = document.getElementById(ringId);
-        if (ring) ring.remove();
+        node.innerHTML = `
+          <div class="label">${child.label || ''}</div>
+          <div class="title">${child.title || ''}</div>
+          <div class="sub">${child.sub || child.detail || ''}</div>
+        `;
       }
 
-      nodeElement.classList.remove('open');
-      expandedNodes.delete(id);
+      wrap.appendChild(node);
+      ringDiv.appendChild(wrap);
+    });
 
-      if (expandedNodes.size === 0) {
-        container.classList.remove('is-rotated');
+    container.classList.add('is-rotated');
+    nodeEl.dataset.childRingId = ringId;
+    setTimeout(initParticles, 200);
+  }
+
+  function closeNode(nodeEl, id) {
+    if (!nodeEl.classList.contains('open')) return;
+    const ring = document.getElementById(nodeEl.dataset.childRingId || '');
+    if (ring) ring.remove();
+    nodeEl.classList.remove('open');
+    expandedNodes.delete(id);
+    if (!expandedNodes.size) container.classList.remove('is-rotated');
+    setTimeout(initParticles, 200);
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────
+  function init() {
+    const r = container.getBoundingClientRect();
+    canvas.width  = r.width  || 620;
+    canvas.height = r.height || 620;
+
+    buildRings();
+
+    centerNode.addEventListener('click', () => {
+      const open = document.querySelectorAll('.ring .node.expandable.open');
+      if (open.length) {
+        open.forEach(n => { if (n.dataset.id) closeNode(n, n.dataset.id); });
       }
+    });
 
-      setTimeout(initParticles, 200);
-    }
-
-    // ============================================================
-    //  INICIALIZACIÓN
-    // ============================================================
-    function init() {
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width || 520;
-      canvas.height = rect.height || 520;
-
+    window.addEventListener('resize', () => {
+      const r2 = container.getBoundingClientRect();
+      canvas.width  = r2.width  || 620;
+      canvas.height = r2.height || 620;
       buildRings();
+    });
+  }
 
-      centerNode.addEventListener('click', function() {
-        const openNodes = document.querySelectorAll('.ring .node.expandable.open');
-
-        if (openNodes.length > 0) {
-          openNodes.forEach(n => {
-            if (n.dataset.id) {
-              closeNode(n, n.dataset.id);
-            }
-          });
-        } else {
-          const firstNode = document.querySelector('.ring .node.expandable:not(.pink)');
-          if (firstNode) {
-            firstNode.click();
-          }
-        }
-      });
-
-      initParticles();
-
-      window.addEventListener('resize', () => {
-        const rect = container.getBoundingClientRect();
-        canvas.width = rect.width || 520;
-        canvas.height = rect.height || 520;
-        initParticles();
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
+  document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
